@@ -1,30 +1,49 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+    <header>
+        <h1 class="app-title">THE PRODUCT APP</h1>
+        <NavMenu></NavMenu>
+    </header>
+    <main>
+        <router-view/>
+    </main>
 </template>
 
+<script setup lang="ts">
+    import NavMenu from "@/components/NavMenu.vue";
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    html {
+        height: 100%;
     }
-  }
-}
+
+    body {
+        margin: 0;
+        height: 100%;
+
+        #app {
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #2c3e50;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            header {
+                .app-title {
+                    margin: 0;
+                    position: absolute;
+                    font-style: italic;
+                    left: 20px;
+                    font-size: 60px;
+                }
+            }
+
+            main {
+                flex-grow: 1;
+                padding: 20px;
+            }
+        }
+    }
 </style>
