@@ -41,7 +41,6 @@ export const useAuthStore = defineStore(
 
                     const response = await rawResponse.json();
                     this.jwt = response.jwt;
-                    console.log(this.jwt);
                     return true;
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
@@ -72,7 +71,6 @@ export const useAuthStore = defineStore(
 
                     const response = await rawResponse.json();
                     this.jwt = response.jwt;
-                    console.log(this.jwt);
                     return true;
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
@@ -99,7 +97,6 @@ export const useAuthStore = defineStore(
                     }
 
                     this.jwt = null;
-                    console.log(this.jwt);
                     return true;
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
