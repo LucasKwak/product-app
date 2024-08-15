@@ -1,13 +1,19 @@
 <template>
     <nav class="nav-menu">
         <router-link to="/">Home</router-link>
-        <router-link :to="{name: 'sign-up'}">Sign Up</router-link>
-        <router-link :to="{name: 'sign-in'}">Sign In</router-link>
+        <router-link v-if="!isAuthenticated" :to="{name: 'sign-up'}">Sign Up</router-link>
+        <router-link v-if="!isAuthenticated" :to="{name: 'sign-in'}">Sign In</router-link>
+        <router-link v-if="isAuthenticated" :to="{name: 'log-out'}">Log out</router-link>
     </nav>
 </template>
 
 <script lang="ts" setup>
+    import { computed } from 'vue';
+    import {useAuthStore} from "@/store/auth";
 
+    const store = useAuthStore();
+
+    const isAuthenticated = computed (() => store.hasJwt);
 </script>
 
 <style lang="scss" scoped>

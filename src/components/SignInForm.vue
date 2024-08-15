@@ -7,8 +7,8 @@
 
         <div class="inputs-wrapper">
             <div class="input-wrapper">
-                <label class="sing-in-form__label" for="inputEmail">Email</label>
-                <input class="sing-in-form__input" type="text" id="inputEmail" placeholder="email@gmail.com" v-model="email">
+                <label class="sing-in-form__label" for="inputUsername">Username</label>
+                <input class="sing-in-form__input" type="text" id="inputUsername" placeholder="lucaskwak" v-model="username">
             </div>
             <div class="input-wrapper">
                 <label class="sing-in-form__label" for="inputPassword">Password</label>
@@ -26,7 +26,22 @@
 </template>
 
 <script lang="ts" setup>
+    import { Ref, ref } from "vue";
+    import { useAuthStore } from '@/store/auth';
+    import router from '@/router';
 
+    const store = useAuthStore();
+
+    let username:Ref<string> = ref('');
+    let password:Ref<string> = ref('');
+
+    const signIn = async ()=> {
+        const wentWell = await store.logIn(username.value, password.value);
+        if (wentWell) {
+            // Para cambiar de vista
+            await router.push("/");
+        }
+    }
 </script>
 
 <style lang="scss" scoped>

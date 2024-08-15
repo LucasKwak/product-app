@@ -47,7 +47,7 @@
     const createAccount = async ()=> {
         const wentWell = await store.register(name.value, lastName.value, username.value, password.value);
         if (wentWell) {
-            router.push('/');
+            await router.push('/');
         }
     }
 </script>
