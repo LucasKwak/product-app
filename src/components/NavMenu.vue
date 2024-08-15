@@ -3,6 +3,7 @@
         <router-link to="/">Home</router-link>
         <router-link v-if="!isAuthenticated" :to="{name: 'sign-up'}">Sign Up</router-link>
         <router-link v-if="!isAuthenticated" :to="{name: 'sign-in'}">Sign In</router-link>
+        <router-link v-if="isAuthenticated" :to="{name: 'profile'}">Profile</router-link>
         <router-link v-if="isAuthenticated" :to="{name: 'log-out'}">Log out</router-link>
     </nav>
 </template>
