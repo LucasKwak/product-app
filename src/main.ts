@@ -4,6 +4,17 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-const pinia = createPinia()
+import { useAuthStore } from "@/store/auth";
 
-createApp(App).use(router).use(pinia).mount('#app')
+const app = createApp(App);
+const pinia = createPinia();
+
+app.use(pinia);
+
+const authStore = useAuthStore();
+
+authStore.validateToken().then(() => {
+    console.log("Aplicacion para montar")
+    app.use(router);
+    app.mount('#app');
+});
