@@ -22,6 +22,10 @@
             </p>
             <button class="form__button" type="submit" @click.prevent="signIn">Sign in</button>
         </div>
+
+        <div class="oauth2-wrapper">
+            <button class="form__button" type="submit" @click.prevent="signInGoogle">Google</button>
+        </div>
     </form>
 </template>
 
@@ -41,6 +45,10 @@
             // Para cambiar de vista
             await router.push("/");
         }
+    }
+
+    const signInGoogle = ()=> {
+        store.loginWithOauth2();
     }
 </script>
 
@@ -117,23 +125,23 @@
             a:hover {
                 text-decoration: underline;
             }
+        }
 
-            .form__button {
-                width: 200px;
-                background-color: $primaryColor;
-                border: 2px solid $contrastColorDark;
-                border-radius: 15px;
-                padding: 10px;
-                cursor: pointer;
-                font-family: Avenir, Helvetica, Arial, sans-serif;
-                font-weight: bold;
-                font-size: 18px;
-                color: $textColor;
-            }
+        .form__button {
+            width: 200px;
+            background-color: $primaryColor;
+            border: 2px solid $contrastColorDark;
+            border-radius: 15px;
+            padding: 10px;
+            cursor: pointer;
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            color: $textColor;
+        }
 
-            .form__button:hover{
-                background-color: white;
-            }
-        } 
+        .form__button:hover{
+            background-color: white;
+        }
     }
 </style>
