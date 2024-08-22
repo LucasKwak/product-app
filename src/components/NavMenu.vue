@@ -14,7 +14,7 @@
 
     const store = useAuthStore();
 
-    const isAuthenticated = computed (() => store.hasJwt);
+    const isAuthenticated = computed (() => store.isAuthenticated);
 </script>
 
 <style lang="scss" scoped>
