@@ -45,7 +45,7 @@
     let username:Ref<string> = ref('');
 
     const createAccount = async ()=> {
-        const wentWell = await store.register(name.value, lastName.value, username.value, password.value);
+        const wentWell = await store.register(name.value, lastName.value, username.value, email.value, password.value);
         if (wentWell) {
             await router.push('/');
         }
