@@ -4,7 +4,7 @@ import SignInView from "@/authentication/views/SignInView.vue";
 import SignUpView from "@/authentication/views/SignUpView.vue";
 import LogOutView from "@/authentication/views/LogOutView.vue";
 import AccountView from "@/profile/views/AccountView.vue";
-import AllProductsView from "@/products/views/AllProductsView.vue";
+import AllProductsView from "@/products/read/views/AllProductsView.vue";
 import DefaultView from "@/home/views/DefaultView.vue";
 import { useAuthStore } from "@/util/store/auth";
 
