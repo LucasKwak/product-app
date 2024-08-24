@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-    import AllProductsDisplay from "@/products/components/AllProductsDisplay.vue";
+    import AllProductsDisplay from "@/products/read/components/AllProductsDisplay.vue";
 </script>
 
 <style scoped>
