@@ -6,10 +6,11 @@
 </template>
 
 <script lang="ts" setup>
-    import ProductDetails from "@/products/components/ProductDetails.vue";
+    import ProductDetails from "@/products/read/components/ProductDetails.vue";
     import IProduct from "@/util/interfaces/IProduct";
     import { useAuthStore } from "@/util/store/auth";
     import { Ref, ref, onMounted } from 'vue';
+    import router from "@/util/router";
 
 
     const store = useAuthStore();
@@ -34,6 +35,12 @@
                         "Accept": "application/json",
                     }
                 });
+
+                if (rawResponse.status == 401) {
+                    this.isAuthenticated = false;
+                    await router.push("/sign-in");
+                    return null;
+                }
 
                 // Verificar el codigo de estado de la respuesta HTTP
                 if (rawResponse.status !== 200) {
