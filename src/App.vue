@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-    import NavMenu from "@/components/NavMenu.vue";
+    import NavMenu from "@/navigation/components/HeaderNavMenu.vue";
 </script>
 
 <style lang="scss">
