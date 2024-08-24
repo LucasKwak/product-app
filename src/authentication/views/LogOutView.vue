@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-    import LogOutMessage from '@/components/LogOutMessage.vue'
+    import LogOutMessage from '@/authentication/components/LogOutMessage.vue'
 </script>
 
 <style lang="scss" scoped>

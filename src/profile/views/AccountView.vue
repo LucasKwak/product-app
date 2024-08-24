@@ -1,15 +1,15 @@
 <template>
-    <div class="form-wrapper">        
-        <SignUpForm></SignUpForm>
+    <div class="account-wrapper">        
+        <AccountInfo></AccountInfo>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import SignUpForm from '@/components/SignUpForm.vue'
+    import AccountInfo from '@/profile/components/AccountInfo.vue'
 </script>
 
 <style lang="scss" scoped>
-    .form-wrapper {
+    .account-wrapper {
         padding-top: 20px;
         display: flex;
         flex-direction: column;

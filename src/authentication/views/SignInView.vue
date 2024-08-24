@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import SignInForm from '@/components/SignInForm.vue'
+import SignInForm from '@/authentication/components/SignInForm.vue'
 </script>
 
 <style lang="scss" scoped>

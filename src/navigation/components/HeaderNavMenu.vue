@@ -1,6 +1,6 @@
 <template>
     <nav class="nav-menu">
-        <router-link to="/">Home</router-link>
+        <router-link to="/home">Home</router-link>
         <router-link v-if="!isAuthenticated" :to="{name: 'sign-up'}">Sign Up</router-link>
         <router-link v-if="!isAuthenticated" :to="{name: 'sign-in'}">Sign In</router-link>
         <router-link v-if="isAuthenticated" :to="{name: 'profile'}">Profile</router-link>
@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
     import { computed } from 'vue';
-    import {useAuthStore} from "@/store/auth";
+    import {useAuthStore} from "@/util/store/auth";
 
     const store = useAuthStore();
 

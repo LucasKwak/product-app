@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import IUser from "@/interfaces/IUser";
+import IUser from "@/util/interfaces/IUser";
 
 export const useAuthStore = defineStore(
     "auth",

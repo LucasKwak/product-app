@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-    import IUser from '@/interfaces/IUser';
-    import { useAuthStore } from '@/store/auth';
+    import IUser from '@/util/interfaces/IUser';
+    import { useAuthStore } from '@/util/store/auth';
     import { onMounted, onUnmounted,  Ref, ref } from 'vue';
 
     const store = useAuthStore();
