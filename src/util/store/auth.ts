@@ -183,12 +183,8 @@ export const useAuthStore = defineStore(
                         return;
                     }
 
-                    const value = await rawResponse.json();
-
                     await this.getRole();
 
-                    // Establecemos que el usuario esta autenticado
-                    //this.isAuthenticated = value;
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
                     this.isAuthenticated = false;
