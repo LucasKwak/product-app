@@ -7,6 +7,7 @@ import AccountView from "@/profile/views/AccountView.vue";
 import AllProductsView from "@/products/read/views/AllProductsView.vue";
 import DefaultView from "@/home/views/DefaultView.vue";
 import { useAuthStore } from "@/util/store/auth";
+import CreateProductView from "@/products/create/views/CreateProductView.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -33,6 +34,14 @@ const routes: Array<RouteRecordRaw> = [
                     requireAuth: true
                 },
             },
+            {
+                path: "create-product",
+                name: "createProduct",
+                component: CreateProductView,
+                meta: {
+                    requireAuthAsAdmin: true,
+                },
+            }
         ]
     },
     {
@@ -67,10 +76,12 @@ router.beforeEach(
     (to, from, next) => {
         const store = useAuthStore();
         const isAuthenticated =  store.isAuthenticated;
+        const isAdmin =  store.isAdmin;
 
         const needAuth = to.meta.requireAuth;
+        const needAdminAuth = to.meta.requireAuthAsAdmin;
 
-        if(needAuth && !isAuthenticated) {
+        if((needAuth && !isAuthenticated) || (needAdminAuth && !isAdmin)) {
             next('sign-in');
         }else{
             next();
