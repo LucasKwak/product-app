@@ -4,13 +4,14 @@
         <h4>{{ props.category }}</h4>
         <div class="p-wrapper">
             <p> <strong>Precio:</strong>  {{ props.price }} €</p>
-            <button class="update-button" @click="updateProduct">Update</button>
+            <button v-if="isAdmin" class="update-button" @click="updateProduct">Update</button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { defineProps, defineEmits } from 'vue';
+import {defineProps, defineEmits, computed} from 'vue';
+    import { useAuthStore } from "@/util/store/auth";
 
     const props = defineProps(
         {
@@ -27,6 +28,9 @@
     function updateProduct() {
         emit('open-update-product-modal', props.id, props.name, props.categoryId);
     }
+
+    const store = useAuthStore();
+    const isAdmin = computed (() => store.isAdmin);
 
 </script>
 
