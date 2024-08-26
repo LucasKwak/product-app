@@ -13,7 +13,8 @@
 <script lang="ts" setup>
     import IUser from '@/util/interfaces/IUser';
     import { useAuthStore } from '@/util/store/auth';
-    import { onMounted, onUnmounted,  Ref, ref } from 'vue';
+    import { onMounted,  Ref, ref } from 'vue';
+    import router from "@/util/router";
 
     const store = useAuthStore();
     const user:Ref<IUser> = ref({});
@@ -21,14 +22,46 @@
 
     onMounted(
         async () => {
-            user.value = await store.getAccountInfo();
-            loading.value = false;
-        }
-    );
+            const uri = `${store.baseURL}/auth/profile`;
+            try {
 
-    onUnmounted(
-        () => {
-            console.log('Deactivated');
+                const rawResponse = await fetch(uri, {
+                    method: "GET",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                });
+
+                if (rawResponse.status == 401) {
+                    store.setIsAuthenticated(false);
+                    await router.push("/sign-in");
+                    return null;
+                }
+
+                // Verificar el codigo de estado de la respuesta HTTP (cualquier otro error)
+                if (rawResponse.status !== 200) {
+                    const errorResponse = await rawResponse.json();
+                    console.error(errorResponse.message);
+                    return null;
+                }
+
+                const response = await rawResponse.json();
+
+                user.value = {
+                    uid: response.id,
+                    name: response.name,
+                    username: response.username,
+                    role: response.role,
+                    operations: response.operations,
+                }
+            } catch (error) {
+                console.error("Error en la solicitud:", error);
+                return null;
+            } finally {
+                loading.value = false;
+            }
         }
     );
 </script>

@@ -113,48 +113,6 @@ export const useAuthStore = defineStore(
                     return false;
                 }
             },
-            async getAccountInfo(): Promise<IUser|null> {
-                const uri = `${this.baseURL}/auth/profile`;
-                try {
-                    let user:IUser = {};
-
-                    const rawResponse = await fetch(uri, {
-                        method: "GET",
-                        credentials: 'include',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                        },
-                    });
-
-                    if (rawResponse.status == 401) {
-                        this.isAuthenticated = false;
-                        await router.push("/sign-in");
-                        return null;
-                    }
-
-                    // Verificar el codigo de estado de la respuesta HTTP (cualquier otro error)
-                    if (rawResponse.status !== 200) {
-                        const errorResponse = await rawResponse.json();
-                        console.error(errorResponse.message);
-                        return null;
-                    }
-
-                    const response = await rawResponse.json();
-
-                    user = {
-                        uid: response.id,
-                        name: response.name,
-                        username: response.username,
-                        role: response.role,
-                        operations: response.operations,
-                    }
-                    return user;
-                } catch (error) {
-                    console.error("Error en la solicitud:", error);
-                    return null;
-                }
-            },
             async validateToken(): Promise<void> {
                 const uri = `${this.baseURL}/auth/validate-token`;
                 try {
@@ -169,8 +127,7 @@ export const useAuthStore = defineStore(
 
                     // En caso de que el token que haya en las cookies este caducadoo tenga una forma invalida
                     if (rawResponse.status == 401) {
-                        console.log("ESTOY AQUI")
-                        this.isAuthenticated = false;
+                        this.setIsAuthenticated(false);
                         await router.push("/sign-in");
                         return;
                     }
@@ -225,8 +182,6 @@ export const useAuthStore = defineStore(
 
                     const response = await rawResponse.json();
 
-                    console.log(response.role);
-
                     if(response.role == "CUSTOMER"){
                         this.isCustomer = true;
                     }
@@ -242,10 +197,6 @@ export const useAuthStore = defineStore(
                     // Establecemos que el usuario esta autenticado
                     this.isAuthenticated = true;
 
-                    console.log(this.isCustomer);
-                    console.log(this.isAdmin);
-                    console.log(this.isAssistant);
-
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
                     this.isAuthenticated = false;
@@ -253,6 +204,11 @@ export const useAuthStore = defineStore(
             },
             setIsAuthenticated(yesOrNo:boolean): void {
                 this.isAuthenticated = yesOrNo;
+                if(!yesOrNo) {
+                    this.isAuthenticated = false;
+                    this.isAdmin = false;
+                    this.isAssistant = false;
+                }
             },
         }
     }
