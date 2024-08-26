@@ -14,7 +14,6 @@ app.use(pinia);
 const authStore = useAuthStore();
 
 authStore.validateToken().then(() => {
-    console.log("Aplicacion para montar")
     app.use(router);
     app.mount('#app');
 });
