@@ -1,7 +1,20 @@
 <template>
+    <UpdateModal v-if="isModalOpen"
+                 :product-id="productIdModal"
+                 :product-name="productNameModal"
+                 @close-modal="closeUpdateModal"
+                 @update-product="updateProduct"
+    ></UpdateModal>
     <div class="products-wrapper" @scroll="handleScroll">
         <div v-if="loading" class="spinner"></div>
-        <ProductDetails v-for="(product, index) in productArray" :key="index" :name="product.name" :category="product.category.name" :price="product.price"></ProductDetails>
+        <ProductDetails v-for="(product, index) in productArray" :key="index"
+                        :id="product.id"
+                        :name="product.name"
+                        :category="product.category.name"
+                        :category-id="product.category.id"
+                        :price="product.price"
+                        @open-update-product-modal="openUpdateModal"
+        ></ProductDetails>
     </div>
 </template>
 
@@ -11,13 +24,14 @@
     import { useAuthStore } from "@/util/store/auth";
     import { Ref, ref, onMounted } from 'vue';
     import router from "@/util/router";
+    import UpdateModal from "@/products/update/components/UpdateModal.vue";
 
 
     const store = useAuthStore();
     let productArray:Ref<Array<IProduct>> = ref([]);
     let currentPage:Ref<number> = ref(0);
     let totalPages:Ref<number> = ref(1);
-    let pageSize:Ref<number> = ref(10);
+    let pageSize:Ref<number> = ref(15);
     let loading:Ref<boolean> = ref(true);
 
 
@@ -67,6 +81,58 @@
         const bottomReached = target.scrollHeight - target.scrollTop === target.clientHeight;
         if (bottomReached) {
             loadMoreProducts(); // Cargar más productos si se ha llegado al final
+        }
+    }
+
+    let productIdModal = 0;
+    let productNameModal = "Some product";
+    let categoryIdModal = "Some category id";
+    let isModalOpen:Ref<boolean> = ref(false);
+
+    function openUpdateModal(productId: number, productName: string, categoryId: string): void {
+        productIdModal = productId;
+        productNameModal = productName;
+        categoryIdModal = categoryId;
+        isModalOpen.value = true;
+    }
+
+    function closeUpdateModal(): void {
+        isModalOpen.value = false;
+    }
+
+    const updateProduct = async (newPrice: string)=> {
+        const uri = `${store.baseURL}/products/${productIdModal}`;
+
+        try {
+            const rawResponse = await fetch(uri, {
+                method: "PUT",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify({
+                    name: productNameModal,
+                    price: newPrice,
+                    categoryId: categoryIdModal,
+                }),
+            });
+
+            if (rawResponse.status == 401) {
+                store.setIsAuthenticated(false);
+                await router.push("/sign-in");
+                return;
+            }
+
+            // Verificar el codigo de estado de la respuesta HTTP
+            if (rawResponse.status !== 200) {
+                const errorResponse = await rawResponse.json();
+                console.error(errorResponse.message);
+            }
+            closeUpdateModal();
+            window.location.reload();
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
         }
     }
 
