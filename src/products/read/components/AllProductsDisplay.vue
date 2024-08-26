@@ -50,7 +50,7 @@
                 });
 
                 if (rawResponse.status == 401) {
-                    this.isAuthenticated = false;
+                    store.setIsAuthenticated(false);
                     await router.push("/sign-in");
                     return null;
                 }
