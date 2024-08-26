@@ -26,7 +26,6 @@
             loading.value = true;
             try {
                 const uri = `${store.baseURL}/products?page=${currentPage.value}&size=${pageSize.value}`;
-                console.log(uri);
                 const rawResponse = await fetch(uri, {
                     method: "GET",
                     credentials: 'include',
